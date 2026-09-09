@@ -1,0 +1,25 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check formatting with clang-format
+        run: |
+          clang-format --version
+          clang-format -style=file --dry-run --Werror main.cpp
+
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Build with MSVC
+        shell: cmd
+        run: cl /EHsc /W4 main.cpp
