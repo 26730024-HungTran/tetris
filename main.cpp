@@ -39,6 +39,30 @@ bool canMove(int dx, int dy)
             }
     return true;
 }
+void rotate()
+{
+    char rotated[4][4];
+
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
+            rotated[j][3 - i] = blocks[b][i][j];
+
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
+            if (rotated[i][j] != ' ')
+            {
+                int xt = x + j;
+                int yt = y + i;
+                if (xt < 1 || xt >= W - 1 || yt < 1 || yt >= H - 1)
+                    return;
+                if (board[yt][xt] != ' ')
+                    return;
+            }
+
+    for (int i = 0; i < 4; i++)
+        for (int j = 0; j < 4; j++)
+            blocks[b][i][j] = rotated[i][j];
+}
 void block2Board()
 {
     for (int i = 0; i < 4; i++)
@@ -90,6 +114,8 @@ int main()
                 x++;
             if (c == 'x' && canMove(0, 1))
                 y++;
+            if (c == 'w')
+                rotate();
             if (c == 'q')
                 break;
         }
