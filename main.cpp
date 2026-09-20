@@ -53,6 +53,34 @@ void boardDelBlock()
             if (blocks[b][i][j] != ' ')
                 board[y + i][x + j] = ' ';
 }
+void removeLine()
+{
+    // duyệt từ đáy lên, bỏ qua viền trên (hàng 0) và viền dưới (hàng H-1)
+    for (int i = H - 2; i >= 1; i--)
+    {
+        bool full = true;
+        for (int j = 1; j < W - 1; j++) // bỏ 2 viền trái/phải
+            if (board[i][j] == ' ')
+            {
+                full = false;
+                break;
+            }
+
+        if (full)
+        {
+            // dồn tất cả các hàng phía trên xuống 1 dòng
+            for (int k = i; k > 1; k--)
+                for (int j = 1; j < W - 1; j++)
+                    board[k][j] = board[k - 1][j];
+
+            // hàng trên cùng (hàng 1) thành trống
+            for (int j = 1; j < W - 1; j++)
+                board[1][j] = ' ';
+
+            i++; // kiểm tra lại chính hàng i, vì nó vừa nhận nội dung của hàng trên
+        }
+    }
+}
 void initBoard()
 {
     for (int i = 0; i < H; i++)
@@ -98,7 +126,7 @@ int main()
         else
         {
             block2Board();
-            // removeLine();
+            removeLine();
             x = 5;
             y = 0;
             b = rand() % 7;
