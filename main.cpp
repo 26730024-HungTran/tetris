@@ -59,7 +59,7 @@ void removeLine()
     for (int i = H - 2; i >= 1; i--)
     {
         bool full = true;
-        for (int j = 1; j < W - 1; j++) // bỏ 2 viền trái/phải
+        for (int j = 1; j < W - 1; j++)  // bỏ 2 viền trái/phải
             if (board[i][j] == ' ')
             {
                 full = false;
@@ -77,7 +77,7 @@ void removeLine()
             for (int j = 1; j < W - 1; j++)
                 board[1][j] = ' ';
 
-            i++; // kiểm tra lại chính hàng i, vì nó vừa nhận nội dung của hàng trên
+            i++;  // kiểm tra lại chính hàng i, vì nó vừa nhận nội dung của hàng trên
         }
     }
 }
