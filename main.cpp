@@ -1,4 +1,6 @@
 #include <iostream>
+#include <cstdlib>
+#include <ctime>
 #include <conio.h>
 
 using namespace std;
@@ -7,6 +9,12 @@ using namespace std;
 char board[H][W] = {};
 
 int x, y, b;
+
+int x, y, b;
+
+int speed = 500;             
+const int SPEED_STEP = 25;  
+const int MIN_SPEED = 100;   
 char blocks[][4][4] = {
     {{' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}},
     {{' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}},
@@ -77,33 +85,34 @@ void boardDelBlock()
             if (blocks[b][i][j] != ' ')
                 board[y + i][x + j] = ' ';
 }
-void removeLine()
+int removeLine()
 {
-    // duyệt từ đáy lên, bỏ qua viền trên (hàng 0) và viền dưới (hàng H-1)
+    int cleared = 0;
+ 
     for (int i = H - 2; i >= 1; i--)
     {
         bool full = true;
-        for (int j = 1; j < W - 1; j++)  // bỏ 2 viền trái/phải
+        for (int j = 1; j < W - 1; j++)  
             if (board[i][j] == ' ')
             {
                 full = false;
                 break;
             }
-
+ 
         if (full)
         {
-            // dồn tất cả các hàng phía trên xuống 1 dòng
             for (int k = i; k > 1; k--)
                 for (int j = 1; j < W - 1; j++)
                     board[k][j] = board[k - 1][j];
-
-            // hàng trên cùng (hàng 1) thành trống
+ 
             for (int j = 1; j < W - 1; j++)
                 board[1][j] = ' ';
-
-            i++;  // kiểm tra lại chính hàng i, vì nó vừa nhận nội dung của hàng trên
+ 
+            cleared++;  
+            i++;        
         }
     }
+    return cleared;
 }
 void initBoard()
 {
@@ -152,14 +161,19 @@ int main()
         else
         {
             block2Board();
-            removeLine();
+            if (removeLine() > 0)
+            {
+                speed -= SPEED_STEP;
+                if (speed < MIN_SPEED)
+                    speed = MIN_SPEED;
+            }
             x = 5;
             y = 0;
             b = rand() % 7;
         }
         block2Board();
         draw();
-        _sleep(500);
+        _sleep(speed);
     }
     return 0;
 }
