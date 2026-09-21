@@ -10,8 +10,6 @@ char board[H][W] = {};
 
 int x, y, b;
 
-int x, y, b;
-
 int speed = 500;             
 const int SPEED_STEP = 25;  
 const int MIN_SPEED = 100;   
