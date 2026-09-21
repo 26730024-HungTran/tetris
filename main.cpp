@@ -13,7 +13,6 @@ int x, y, b;
 int speed = 500;
 const int SPEED_STEP = 25;
 const int MIN_SPEED = 100;
- 
 char blocks[][4][4] = {
     {{' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}},
     {{' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}},
@@ -96,7 +95,6 @@ int removeLine()
                 full = false;
                 break;
             }
- 
         if (full)
         {
             for (int k = i; k > 1; k--)
@@ -104,7 +102,6 @@ int removeLine()
                     board[k][j] = board[k - 1][j];
             for (int j = 1; j < W - 1; j++)
                 board[1][j] = ' ';
- 
             cleared++;
             i++;
         }
