@@ -84,14 +84,16 @@ void boardDelBlock()
             if (blocks[b][i][j] != ' ')
                 board[y + i][x + j] = ' ';
 }
+// trả về số hàng đã xóa được
 int removeLine()
 {
     int cleared = 0;
  
+    // duyệt từ đáy lên, bỏ qua viền trên (hàng 0) và viền dưới (hàng H-1)
     for (int i = H - 2; i >= 1; i--)
     {
         bool full = true;
-        for (int j = 1; j < W - 1; j++)  
+        for (int j = 1; j < W - 1; j++)  // bỏ 2 viền trái/phải
             if (board[i][j] == ' ')
             {
                 full = false;
@@ -100,15 +102,17 @@ int removeLine()
  
         if (full)
         {
+            // dồn tất cả các hàng phía trên xuống 1 dòng
             for (int k = i; k > 1; k--)
                 for (int j = 1; j < W - 1; j++)
                     board[k][j] = board[k - 1][j];
  
+            // hàng trên cùng (hàng 1) thành trống
             for (int j = 1; j < W - 1; j++)
                 board[1][j] = ' ';
  
-            cleared++;  
-            i++;        
+            cleared++;  // đếm số hàng đã xóa
+            i++;        // kiểm tra lại chính hàng i, vì nó vừa nhận nội dung của hàng trên
         }
     }
     return cleared;
@@ -160,7 +164,7 @@ int main()
         else
         {
             block2Board();
-            if (removeLine() > 0)
+            if (removeLine() > 0)  // xóa được ít nhất 1 hàng thì tăng tốc
             {
                 speed -= SPEED_STEP;
                 if (speed < MIN_SPEED)
