@@ -2,7 +2,8 @@
 #include <cstdlib>
 #include <ctime>
 #include <conio.h>
-
+#include <windows.h>
+#include <ctime>
 using namespace std;
 #define H 20
 #define W 15
@@ -117,14 +118,71 @@ void initBoard()
             else
                 board[i][j] = ' ';
 }
+
 void draw()
 {
     system("cls");
 
-    for (int i = 0; i < H; i++, cout << endl)
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    for (int i = 0; i < H; i++)
+    {
         for (int j = 0; j < W; j++)
-            cout << board[i][j];
+        {
+            char c = board[i][j];
+
+            if (c == '#')
+            {
+                SetConsoleTextAttribute(hConsole, 15);
+                cout << "##";
+            }
+            else if (c == 'I')
+            {
+                SetConsoleTextAttribute(hConsole, 11);
+                cout << "██";
+            }
+            else if (c == 'O')
+            {
+                SetConsoleTextAttribute(hConsole, 14);
+                cout << "██";
+            }
+            else if (c == 'T')
+            {
+                SetConsoleTextAttribute(hConsole, 13);
+                cout << "██";
+            }
+            else if (c == 'S')
+            {
+                SetConsoleTextAttribute(hConsole, 10);
+                cout << "██";
+            }
+            else if (c == 'Z')
+            {
+                SetConsoleTextAttribute(hConsole, 12);
+                cout << "██";
+            }
+            else if (c == 'J')
+            {
+                SetConsoleTextAttribute(hConsole, 9);
+                cout << "██";
+            }
+            else if (c == 'L')
+            {
+                SetConsoleTextAttribute(hConsole, 6);
+                cout << "██";
+            }
+            else
+            {
+                SetConsoleTextAttribute(hConsole, 0);
+                cout << "  ";
+            }
+        }
+
+        cout << endl;
+    }
+    SetConsoleTextAttribute(hConsole, 7);
 }
+
 int main()
 {
     srand(time(0));
