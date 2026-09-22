@@ -177,7 +177,6 @@ void draw()
 
         cout << endl;
     }
-
     SetConsoleTextAttribute(hConsole, 7);
 }
 
