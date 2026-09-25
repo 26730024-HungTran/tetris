@@ -7,13 +7,14 @@
 using namespace std;
 #define H 20
 #define W 15
+#define BLOCK "\xE2\x96\x88\xE2\x96\x88"
 char board[H][W] = {};
 
 int x, y, b;
 
-int speed = 500;
-const int SPEED_STEP = 25;
-const int MIN_SPEED = 100;
+int speed = 333;
+const int SPEED_STEP = 17;
+const int MIN_SPEED = 67;
 char blocks[][4][4] = {
     {{' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}},
     {{' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}, {' ', 'I', ' ', ' '}},
@@ -121,9 +122,8 @@ void initBoard()
 
 void draw()
 {
-    system("cls");
-
     HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleCursorPosition(hConsole, {0, 0});
 
     for (int i = 0; i < H; i++)
     {
@@ -139,37 +139,37 @@ void draw()
             else if (c == 'I')
             {
                 SetConsoleTextAttribute(hConsole, 11);
-                cout << "██";
+                cout << BLOCK;
             }
             else if (c == 'O')
             {
                 SetConsoleTextAttribute(hConsole, 14);
-                cout << "██";
+                cout << BLOCK;
             }
             else if (c == 'T')
             {
                 SetConsoleTextAttribute(hConsole, 13);
-                cout << "██";
+                cout << BLOCK;
             }
             else if (c == 'S')
             {
                 SetConsoleTextAttribute(hConsole, 10);
-                cout << "██";
+                cout << BLOCK;
             }
             else if (c == 'Z')
             {
                 SetConsoleTextAttribute(hConsole, 12);
-                cout << "██";
+                cout << BLOCK;
             }
             else if (c == 'J')
             {
                 SetConsoleTextAttribute(hConsole, 9);
-                cout << "██";
+                cout << BLOCK;
             }
             else if (c == 'L')
             {
                 SetConsoleTextAttribute(hConsole, 6);
-                cout << "██";
+                cout << BLOCK;
             }
             else
             {
@@ -185,10 +185,14 @@ void draw()
 
 int main()
 {
+    SetConsoleOutputCP(CP_UTF8);
+    CONSOLE_CURSOR_INFO ci = {1, FALSE};
+    SetConsoleCursorInfo(GetStdHandle(STD_OUTPUT_HANDLE), &ci);
+    system("cls");
     srand(time(0));
     x = 5;
     y = 0;
-    b = rand() % 7;
+    b = 9 + rand() % 7;
     initBoard();
     while (1)
     {
@@ -220,7 +224,7 @@ int main()
             }
             x = 5;
             y = 0;
-            b = rand() % 7;
+            b = 9 + rand() % 7;
         }
         block2Board();
         draw();
